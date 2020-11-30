@@ -2,11 +2,16 @@
 <html>
 <head>
 	<title>OMDb template</title>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+	<h1>OMDB Movie List</h1>
 	<input id="searchbar" type="text" placeholder="search...">
-
+	<select disabled id="typeFilter">
+		<option value="">Filter type</option>
+		<option value="movie">Movie</option>
+		<option value="series">Series</option>
+	</select>
 	<div id="container"></div>
 
 	<script src="js/main.js"></script>

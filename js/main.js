@@ -23,52 +23,60 @@
 */
 
 let searchBar = document.getElementById("searchbar");
+let typeFilter = document.getElementById("typeFilter");
 let content = document.getElementById("container");
 
 searchBar.addEventListener("input", fetchData);
+typeFilter.addEventListener("change", fetchData);
 
 
 async function fetchData() {
     try {
-        let response = await fetch("http://www.omdbapi.com/?apikey=72e2b6a0&s=" + searchBar.value);
-        
+        let response = await fetch("http://www.omdbapi.com/?apikey=72e2b6a0&s=" + searchBar.value + "&type=" + typeFilter.value);
+        console.log(response.url);
         if(!response.ok) {
-            throw new Error("there was an error with the response" + response.status);
+            throw new Error("there was an error with the response " + response.status);
         } else {
             let data = await response.json();
 
             if(searchBar.value.trim() === "") {
                 content.innerHTML = emptyResult();
+                typeFilter.setAttribute("disabled", "true");
             } else {
                 content.innerHTML = displaySearchData(data);
+                if(searchBar.value.length > 2) {
+                    typeFilter.removeAttribute("disabled");
+                } else {
+                    typeFilter.setAttribute("disabled", "true");
+                }
             }
         }
     } catch (e) {
-        console.log("error occured" + e);
+        console.log("error occured " + e);
     }
+}
 
-    function displaySearchData(data) {
-        let displayResults = "";
-        let result = data['Search'];
-        for(let results of result) {
-            displayResults += `
-                <div class='media-container'>
-                    <div class='media-poster-container'>
-                        <img src='${results.Poster}' alt='Poster for ${results.Title}'>
-                    </div>
-                    <div class='media-info-container'>
-                        <h2>${results.Title}</h2>
-                        <p>${results.Year}</p>
-                        <p>${results.Type}</p>
-                    </div>
+function displaySearchData(data) {
+    let displayResults = "";
+    let result = data['Search'];
+    for(let results of result) {
+        displayResults += `
+            <div class='media-container'>
+                <div class='media-poster-container'>
+                    <img src='${results.Poster}'>
                 </div>
-            `;
-        }
-
-        return displayResults;
+                <div class='media-info-container'>
+                    <h2>${results.Title}</h2>
+                    <p>${results.Year}</p>
+                    <p>${results.Type}</p>
+                </div>
+            </div>
+        `;
     }
 
-    function emptyResult() {
-        return defaultResultHTML = "<h2>That aint no movie I ever heard of! Type in a movie or series to get results.</h2>";
-    }
+    return displayResults;
+}
+
+function emptyResult() {
+    return defaultResultHTML = "<h2>That aint no movie I ever heard of! Type in a movie or series to get results.</h2>";
 }

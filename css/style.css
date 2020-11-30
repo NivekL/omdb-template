@@ -1,0 +1,24 @@
+h1, h2, p, a {
+    color: black;
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+#container {
+    max-width: 960px;
+    margin: 50px 0;
+}
+.media-container {
+    display: flex;
+    align-items: center;
+    width: 800px;
+    margin: 20px 0;
+    padding: 15px 15px 15px 10px;
+    border-bottom: 3px solid #ddd;
+}
+
+
+.media-poster-container img {
+    max-width: 200px;
+    margin-right: 10px;
+}
