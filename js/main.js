@@ -33,7 +33,6 @@ typeFilter.addEventListener("change", fetchData);
 async function fetchData() {
     try {
         let response = await fetch("http://www.omdbapi.com/?apikey=72e2b6a0&s=" + searchBar.value + "&type=" + typeFilter.value);
-        console.log(response.url);
         if(!response.ok) {
             throw new Error("there was an error with the response " + response.status);
         } else {
